@@ -1,0 +1,61 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    // Users can read and write their own user document
+    match /users/{userId} {
+      allow read, write: if request.auth != null && request.auth.uid == userId;
+    }
+    
+    // Study plans - users can read plans they participate in
+    match /studyPlans/{planId} {
+      allow read: if request.auth != null && 
+        (resource.data.participants != null && 
+         request.auth.uid in resource.data.participants);
+      
+      allow create: if request.auth != null && 
+        request.auth.uid == resource.data.ownerId &&
+        request.auth.uid in resource.data.participants;
+      
+      allow update: if request.auth != null && 
+        (request.auth.uid == resource.data.ownerId ||
+         request.auth.uid in resource.data.participants);
+      
+      allow delete: if request.auth != null && 
+        request.auth.uid == resource.data.ownerId;
+    }
+    
+    // Notes - users can read/write notes for plans they participate in
+    match /notes/{noteId} {
+      allow read, write: if request.auth != null && 
+        exists(/databases/$(database)/documents/studyPlans/$(resource.data.planId)) &&
+        request.auth.uid in get(/databases/$(database)/documents/studyPlans/$(resource.data.planId)).data.participants;
+    }
+    
+    // Notifications - users can only access their own notifications
+    match /notifications/{notificationId} {
+      allow read, write: if request.auth != null && 
+        request.auth.uid == resource.data.userId;
+    }
+    
+    // Reminders - users can read/write reminders for plans they participate in
+    match /reminders/{reminderId} {
+      allow read, write: if request.auth != null && 
+        exists(/databases/$(database)/documents/studyPlans/$(resource.data.studyPlanId)) &&
+        request.auth.uid in get(/databases/$(database)/documents/studyPlans/$(resource.data.studyPlanId)).data.participants;
+    }
+    
+    // Invitations - users can read invitations sent to them
+    match /invitations/{invitationId} {
+      allow read: if request.auth != null && 
+        (request.auth.uid == resource.data.inviterId ||
+         request.auth.email == resource.data.inviteeEmail);
+      
+      allow create: if request.auth != null && 
+        request.auth.uid == resource.data.inviterId;
+      
+      allow update: if request.auth != null && 
+        (request.auth.uid == resource.data.inviterId ||
+         request.auth.email == resource.data.inviteeEmail);
+    }
+  }
+}

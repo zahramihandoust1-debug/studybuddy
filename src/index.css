@@ -1,0 +1,214 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Prevent horizontal scroll on mobile */
+html, body {
+  overflow-x: hidden;
+  max-width: 100vw;
+  width: 100%;
+}
+
+/* Ensure all containers respect viewport width */
+* {
+  box-sizing: border-box;
+  max-width: 100%;
+}
+
+/* Prevent any element from causing horizontal scroll */
+* {
+  overflow-x: hidden;
+}
+
+/* Mobile-specific styles */
+@media (max-width: 640px) {
+  body {
+    -webkit-text-size-adjust: 100%;
+    -ms-text-size-adjust: 100%;
+    overflow-x: hidden;
+    position: relative;
+  }
+  
+  /* Force all elements to stay within viewport */
+  * {
+    max-width: 100vw !important;
+    overflow-x: hidden !important;
+  }
+  
+  /* Prevent images from causing overflow */
+  img {
+    max-width: 100% !important;
+    height: auto !important;
+  }
+  
+  /* Prevent text from wrapping outside viewport */
+  * {
+    word-wrap: break-word;
+    word-break: break-word;
+  }
+  
+  /* Enhanced text overflow handling for mobile */
+  h1, h2, h3, h4, h5, h6 {
+    word-wrap: break-word;
+    word-break: break-word;
+    overflow-wrap: break-word;
+    hyphens: auto;
+  }
+  
+  /* Long text handling */
+  .text-ellipsis {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+  
+  /* Multi-line text truncation */
+  .line-clamp-2 {
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+  
+  .line-clamp-3 {
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+  
+  /* Navigation text handling */
+  .nav-text {
+    max-width: 100%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+  
+  /* Form text handling */
+  input, textarea, select {
+    word-wrap: break-word;
+    word-break: break-word;
+  }
+  
+  /* Card content handling */
+  .card-content {
+    word-wrap: break-word;
+    word-break: break-word;
+    overflow-wrap: break-word;
+  }
+}
+
+body {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  overflow-x: hidden;
+  max-width: 100vw;
+  width: 100%;
+}
+
+/* Additional mobile overflow prevention */
+@media (max-width: 768px) {
+  html, body {
+    overflow-x: hidden !important;
+    max-width: 100vw !important;
+    width: 100% !important;
+  }
+  
+  /* Force all elements to respect viewport */
+  * {
+    max-width: 100vw !important;
+    overflow-x: hidden !important;
+  }
+  
+  /* Prevent any container from exceeding viewport */
+  .max-w-7xl {
+    max-width: 100vw !important;
+  }
+  
+  /* Ensure flex containers don't overflow */
+  .flex {
+    max-width: 100%;
+    overflow-x: hidden;
+  }
+  
+  /* Enhanced mobile text handling */
+  .mobile-text-fix {
+    word-wrap: break-word;
+    word-break: break-word;
+    overflow-wrap: break-word;
+    hyphens: auto;
+  }
+  
+  /* Mobile navigation improvements */
+  .mobile-nav {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+  }
+  
+  .mobile-nav::-webkit-scrollbar {
+    display: none;
+  }
+  
+  /* Mobile card improvements */
+  .mobile-card {
+    max-width: 100%;
+    overflow: hidden;
+  }
+  
+  /* Mobile form improvements */
+  .mobile-form input,
+  .mobile-form textarea,
+  .mobile-form select {
+    word-wrap: break-word;
+    word-break: break-word;
+    overflow-wrap: break-word;
+  }
+  
+  /* Mobile header improvements */
+  .mobile-header {
+    flex-wrap: nowrap;
+    overflow: hidden;
+  }
+  
+  .mobile-user-info {
+    max-width: 120px;
+    min-width: 0;
+  }
+  
+  .mobile-user-name {
+    font-size: 0.75rem;
+    line-height: 1rem;
+    max-width: 100px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+  
+  /* Mobile header spacing */
+  @media (max-width: 480px) {
+    .mobile-header {
+      gap: 0.25rem;
+    }
+    
+    .mobile-user-info {
+      max-width: 100px;
+    }
+    
+    .mobile-user-name {
+      font-size: 0.7rem;
+      max-width: 80px;
+    }
+  }
+}
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+    monospace;
+}
